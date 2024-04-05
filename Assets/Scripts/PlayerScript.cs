@@ -6,12 +6,14 @@ public class PlayerScript : MonoBehaviour
 {
     const float Deceleration = 20;
     const float JumpVel = 10;
-    const float Speed = 10;
+    const float Speed = 5;
 
+    Transform child0;
     Rigidbody rb;
 
     void Start()
     {
+        child0 = transform.GetChild(0);
         rb = GetComponent<Rigidbody>();
     }
 
@@ -21,10 +23,12 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             vel.x = -Speed;
+            child0.rotation = Quaternion.Euler(0, 180, 0);
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
             vel.x = Speed;
+            child0.rotation = Quaternion.Euler(0, 0, 0);
         }
         else
         {
