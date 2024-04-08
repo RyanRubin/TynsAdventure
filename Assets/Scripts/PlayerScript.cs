@@ -10,6 +10,8 @@ public class PlayerScript : MonoBehaviour
 
     Transform child0;
     Rigidbody rb;
+    float rotY;
+    float rotZ;
 
     void Start()
     {
@@ -20,15 +22,18 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         var vel = rb.velocity;
-        if (Input.GetKey(KeyCode.LeftArrow))
+
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetAxisRaw("Horizontal") < 0)
         {
             vel.x = -Speed;
-            child0.rotation = Quaternion.Euler(0, 180, 0);
+            rotY = 180;
+            rotZ = -10;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetAxisRaw("Horizontal") > 0)
         {
             vel.x = Speed;
-            child0.rotation = Quaternion.Euler(0, 0, 0);
+            rotY = 0;
+            rotZ = -10;
         }
         else
         {
@@ -48,11 +53,24 @@ public class PlayerScript : MonoBehaviour
                     vel.x = 0;
                 }
             }
+            rotZ = 0;
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        child0.rotation = Quaternion.Euler(0, rotY, rotZ);
+
+        var pos = transform.position;
+        bool isGrounded = false;
+        isGrounded |= Physics.Raycast(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
+        // Debug.DrawRay(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1.1f, 0), Color.red);
+        isGrounded |= Physics.Raycast(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
+        // Debug.DrawRay(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1.1f, 0), Color.green);
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))
         {
-            vel.y = JumpVel;
+            if (isGrounded)
+            {
+                vel.y = JumpVel;
+            }
         }
+
         rb.velocity = vel;
     }
 }
