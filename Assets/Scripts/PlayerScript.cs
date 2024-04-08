@@ -58,14 +58,14 @@ public class PlayerScript : MonoBehaviour
         child0.rotation = Quaternion.Euler(0, rotY, rotZ);
 
         var pos = transform.position;
-        bool isGrounded = false;
-        isGrounded |= Physics.Raycast(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
+        bool isHitGround = false;
+        isHitGround |= Physics.Raycast(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
         // Debug.DrawRay(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1.1f, 0), Color.red);
-        isGrounded |= Physics.Raycast(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
+        isHitGround |= Physics.Raycast(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
         // Debug.DrawRay(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1.1f, 0), Color.green);
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))
         {
-            if (isGrounded)
+            if (isHitGround)
             {
                 vel.y = JumpVel;
             }
