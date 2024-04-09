@@ -59,11 +59,11 @@ public class PlayerScript : MonoBehaviour
 
         var pos = transform.position;
         bool isHitBelowL = Physics.Raycast(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), out RaycastHit hitInfoL, 1.25f);
-        Debug.DrawRay(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1.25f, 0), Color.red);
+        // Debug.DrawRay(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1.25f, 0), Color.red);
         bool isHitBelowM = Physics.Raycast(pos, new Vector3(0, -1, 0), out RaycastHit hitInfoM, 1.25f);
-        Debug.DrawRay(pos, new Vector3(0, -1.25f, 0), Color.green);
+        // Debug.DrawRay(pos, new Vector3(0, -1.25f, 0), Color.green);
         bool isHitBelowR = Physics.Raycast(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), out RaycastHit hitInfoR, 1.25f);
-        Debug.DrawRay(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1.25f, 0), Color.blue);
+        // Debug.DrawRay(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1.25f, 0), Color.blue);
         bool isHitBelow = isHitBelowL | isHitBelowM | isHitBelowR;
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))
         {
@@ -75,15 +75,15 @@ public class PlayerScript : MonoBehaviour
 
         if (isHitBelow)
         {
-            if (isHitBelowL && hitInfoL.transform.name.StartsWith("Jayn"))
+            if (isHitBelowL && (hitInfoL.transform.name.StartsWith("Jayn") || hitInfoL.transform.name.StartsWith("Seni")))
             {
                 Destroy(hitInfoL.transform.gameObject);
             }
-            else if (isHitBelowM && hitInfoM.transform.name.StartsWith("Jayn"))
+            else if (isHitBelowM && (hitInfoM.transform.name.StartsWith("Jayn") || hitInfoM.transform.name.StartsWith("Seni")))
             {
                 Destroy(hitInfoM.transform.gameObject);
             }
-            else if (isHitBelowR && hitInfoR.transform.name.StartsWith("Jayn"))
+            else if (isHitBelowR && (hitInfoR.transform.name.StartsWith("Jayn") || hitInfoR.transform.name.StartsWith("Seni")))
             {
                 Destroy(hitInfoR.transform.gameObject);
             }

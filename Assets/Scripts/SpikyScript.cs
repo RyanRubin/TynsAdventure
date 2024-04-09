@@ -36,8 +36,8 @@ public class SpikyScript : MonoBehaviour
         }
         child0.rotation = Quaternion.Euler(0, rotY, rotZ);
 
-        bool isHit = Physics.Raycast(transform.position, new Vector3(dir, 0, 0), out RaycastHit hitInfo, 0.5f);
-        // Debug.DrawRay(transform.position, new Vector3(0.5f * dir, 0, 0), Color.green);
+        bool isHit = Physics.Raycast(transform.position, new Vector3(dir, 0, 0), out RaycastHit hitInfo, 0.5f * transform.localScale.x);
+        // Debug.DrawRay(transform.position, new Vector3(0.5f * transform.localScale.x * dir, 0, 0), Color.green);
         if (isHit && !hitInfo.transform.name.StartsWith("Player"))
         {
             dir *= -1;
