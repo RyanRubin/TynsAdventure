@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikyScript : MonoBehaviour
+public class JaynScript : MonoBehaviour
 {
     const float Speed = 2.5f;
 

@@ -58,16 +58,34 @@ public class PlayerScript : MonoBehaviour
         child0.rotation = Quaternion.Euler(0, rotY, rotZ);
 
         var pos = transform.position;
-        bool isHitGround = false;
-        isHitGround |= Physics.Raycast(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
-        // Debug.DrawRay(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1.1f, 0), Color.red);
-        isHitGround |= Physics.Raycast(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), 1.1f);
-        // Debug.DrawRay(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1.1f, 0), Color.green);
+        bool isHitBelowL = Physics.Raycast(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), out RaycastHit hitInfoL, 1.25f);
+        Debug.DrawRay(new Vector3(pos.x - 0.4f, pos.y, pos.z), new Vector3(0, -1.25f, 0), Color.red);
+        bool isHitBelowM = Physics.Raycast(pos, new Vector3(0, -1, 0), out RaycastHit hitInfoM, 1.25f);
+        Debug.DrawRay(pos, new Vector3(0, -1.25f, 0), Color.green);
+        bool isHitBelowR = Physics.Raycast(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1, 0), out RaycastHit hitInfoR, 1.25f);
+        Debug.DrawRay(new Vector3(pos.x + 0.4f, pos.y, pos.z), new Vector3(0, -1.25f, 0), Color.blue);
+        bool isHitBelow = isHitBelowL | isHitBelowM | isHitBelowR;
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))
         {
-            if (isHitGround)
+            if (isHitBelow)
             {
                 vel.y = JumpVel;
+            }
+        }
+
+        if (isHitBelow)
+        {
+            if (isHitBelowL && hitInfoL.transform.name.StartsWith("Jayn"))
+            {
+                Destroy(hitInfoL.transform.gameObject);
+            }
+            else if (isHitBelowM && hitInfoM.transform.name.StartsWith("Jayn"))
+            {
+                Destroy(hitInfoM.transform.gameObject);
+            }
+            else if (isHitBelowR && hitInfoR.transform.name.StartsWith("Jayn"))
+            {
+                Destroy(hitInfoR.transform.gameObject);
             }
         }
 
